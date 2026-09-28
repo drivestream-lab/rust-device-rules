@@ -1,0 +1,51 @@
+---
+description: Index of Rust device daemon guideline rules (modular MDC topics).
+alwaysApply: true
+---
+
+# Code guideline modules (index)
+
+These **`.mdc`** files govern **architectural patterns** for Rust device
+daemons. Consumed via git submodule at **`.cursor/rules/`**.
+
+**Product-specific** requirements, ADRs, SoC SKUs, schema catalogs, and
+topology locks belong in each consumer repo under **`docs/specification/`**.
+
+## Process rules
+
+| File | Topic |
+|------|--------|
+| **`spec-driven-development.mdc`** | SDD truth hierarchy, as-built discipline, PR traceability |
+| **`testing-verify-flows.mdc`** | cargo test / verify / device-tier methodology |
+| **`rust-device-adr.mdc`** | ADR triggers, template |
+
+## Architecture & runtime
+
+| File | Topic |
+|------|--------|
+| **`architecture.mdc`** | Core crate vs platform backends; no product `#ifdef` trees |
+| **`platform-backends.mdc`** | Trait boundaries; mac / linux / jetson implement |
+| **`process-lifecycle.mdc`** | Long-lived service unit; construct vs run |
+| **`local-ipc.mdc`** | Local IPC transport craft; bounded queues |
+| **`resource-governance.mdc`** | Footprint caps, thresholded telemetry, backpressure |
+| **`cloud-adapter.mdc`** | Cloud transport adapter — no domain logic |
+| **`credential-store.mdc`** | How to store secrets; no secret logging |
+| **`dependency-injection.mdc`** | One DI style; container-owned singleton concept |
+| **`fail-fast.mdc`** | Fail fast; no silent recovery without approval |
+| **`logging-observability.mdc`** | Structured logs; correlation; no secrets |
+| **`rust-tooling.mdc`** | cargo fmt / clippy / test; edition policy |
+
+## Per-repository product documentation
+
+| Path | Purpose |
+|------|---------|
+| **`docs/specification/product/`** | Requirements, capabilities |
+| **`docs/specification/adr/`** | Architecture decisions (topology, schemas, backends) |
+| **`docs/specification/as-built/`** | What is live today |
+| **`tests/README.md`** | Verify commands |
+
+## Cross-project conventions
+
+- **Do not** add product features or tenant names to shared **`.mdc`** files.
+- **Do not** edit **`.cursor/rules/`** in consumer repos — PR upstream here.
+- Practice **filenames** follow `python-services-rules` where the practice is shared.

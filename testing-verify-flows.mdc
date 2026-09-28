@@ -1,0 +1,22 @@
+---
+description: Testing tiers — unit (cargo test), verify (integration), device (real hardware, not CI).
+alwaysApply: true
+---
+
+# Testing methodology
+
+Tier model mirrors `edge-agent-rules` / `python-services-rules`
+`testing-verify-flows.mdc`:
+
+| Tier | Purpose | CI? |
+|------|---------|-----|
+| **Unit** | `cargo test` with fakes/stubs for host/IPC | Yes |
+| **Verify** | Integration against fake host + local IPC | Yes when feasible |
+| **Device** | Real SoC / GPU / service-manager behaviour | Documented; **not** default CI |
+
+Do not invent environment activation commands — use repo Makefile / README.
+
+## Related rules
+
+- **Tooling:** `rust-tooling.mdc`
+- **SDD:** `spec-driven-development.mdc`

@@ -1,0 +1,33 @@
+---
+description: One DI style — container-owned singletons; construct vs initialize; no service-locator get_instance on services.
+alwaysApply: true
+---
+
+# Dependency injection
+
+## Design principle
+
+**One DI style for the whole daemon.** Practice name and singleton law follow
+[`python-services-rules`](https://github.com/drivestream-lab/python-services-rules)
+`dependency-injection.mdc`:
+
+- Collaborators are injected at construction.
+- The **container owns singleton** lifetime for long-lived services — do **not**
+  use `get_instance()` / `OnceLock` service-locator patterns on service types.
+- **Settings / config bags** may use a separate once-loaded pattern and are not
+  mixed into the same “service singleton” story without an ADR.
+
+Rust crate choice (`inject`, custom, etc.) is foundation/ADR — not a second
+competing DI mechanism in the same binary.
+
+## Construct vs run
+
+Construction is cheap and synchronous. Opening sockets, MQTT, and host handles
+happens in an explicit **initialize / run** phase after the runtime is up —
+same two-phase idea as python-services infra `initialize()`.
+
+## Related rules
+
+- **Lifecycle:** `process-lifecycle.mdc`
+- **Fail fast:** `fail-fast.mdc`
+- **ADR:** `rust-device-adr.mdc` if introducing a second DI mechanism

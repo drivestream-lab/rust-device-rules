@@ -1,0 +1,25 @@
+---
+description: Daemon footprint — bounded queues, thresholded telemetry, backpressure; no payload storms in RSS.
+alwaysApply: true
+---
+
+# Resource governance
+
+A device daemon must stay a **small privileged footprint**. It must not become
+an unbounded buffer for workload payloads.
+
+## Hard rules
+
+1. **Bounded** IPC and telemetry queues — drop/threshold with explicit policy
+   rather than grow without limit.
+2. **Thresholded host telemetry** — do not flood uplink or RAM on every sample.
+3. **No inference / artifact payloads** retained in daemon RSS as the SoT —
+   stage on disk with caps when product requires staging.
+4. Backpressure and fail-closed on resource breach (**`fail-fast.mdc`**).
+
+Product storage class names and quotas belong in consumer specs/ADRs.
+
+## Related rules
+
+- **IPC:** `local-ipc.mdc`
+- **Fail fast:** `fail-fast.mdc`

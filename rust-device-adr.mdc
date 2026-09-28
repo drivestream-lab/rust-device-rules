@@ -1,0 +1,28 @@
+---
+description: Which Rust device daemon decisions require an ADR, and the growth path for deferred flavors.
+alwaysApply: true
+---
+
+# ADR triggers (`rust-device-adr`)
+
+Write an **Accepted ADR** in the consumer repo before (or with) implementation
+when any of the following hold:
+
+| Trigger | Examples |
+|---------|----------|
+| New platform backend split | Separate Orin vs A-box crates beyond feature flags |
+| IPC encoding / capability catalog | Framing, schema versioning |
+| Cloud session ownership / topology | Sole gateway vs shared; auth mechanism with expiry |
+| Credential storage degradation | File-backed secrets without SE/TPM |
+| Second DI mechanism | Competing containers in one binary |
+| OS image / boot path | Scope beyond long-lived userspace daemon |
+
+## Template
+
+Use the consumer ADR template (title, status, context, decision, consequences).
+Do not put product schema catalogs into this rules package.
+
+## Related rules
+
+- **SDD:** `spec-driven-development.mdc`
+- **IPC / cloud / credentials:** respective craft MDCs

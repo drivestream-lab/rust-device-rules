@@ -1,0 +1,23 @@
+---
+description: Cloud transport adapter — protocol client only; no domain reconcile logic inside the adapter.
+alwaysApply: true
+---
+
+# Cloud adapter
+
+When this daemon opens a cloud session (e.g. MQTT), the **adapter** is a thin
+transport client: connect, publish, subscribe, reconnect policy hooks.
+
+## Hard rules
+
+1. **No domain logic** in the adapter — desired vs actual reconcile, storage
+   policy, and sibling lifecycle live outside the adapter module.
+2. Protocol defaults (e.g. MQTT v5, QoS 1, mTLS) may be stated as craft
+   defaults; broker **product** and topic **catalogs** are consumer ADR/spec.
+3. **Who** is the sole device-root gateway on a host is **product topology** —
+   not asserted by this package.
+
+## Related rules
+
+- **Credentials:** `credential-store.mdc`
+- **ADR:** `rust-device-adr.mdc`

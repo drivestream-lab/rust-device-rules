@@ -1,0 +1,24 @@
+---
+description: Long-lived device daemon lifecycle — service unit; construct vs run; not a one-shot CLI.
+alwaysApply: true
+---
+
+# Process lifecycle
+
+This craft is a **long-lived device daemon**, typically under **systemd** (or
+equivalent service manager). It is not a one-shot CLI and not a bootloader /
+pre-boot agent.
+
+## Hard rules
+
+1. Separate **construction** (cheap, sync) from **run** (async/event loop) —
+   same spirit as python-services DI construct vs `initialize`.
+2. Clean shutdown on SIGTERM: flush bounded queues, close IPC, release host
+   resources without silent swallow (**`fail-fast.mdc`**).
+3. Crash restart policy is ops/unit file — document in consumer deploy docs;
+   constitution requires the process be restart-safe (idempotent startup).
+
+## Related rules
+
+- **DI:** `dependency-injection.mdc`
+- **IPC:** `local-ipc.mdc`

@@ -1,0 +1,27 @@
+---
+description: Prefer fail-fast over defensive coding; no silent recovery without approval.
+alwaysApply: true
+---
+
+# Fail fast (no silent defensive coding by default)
+
+Aligns with [`python-services-rules`](https://github.com/drivestream-lab/python-services-rules)
+`fail-fast.mdc` intent.
+
+## Prefer
+
+- Surface invalid config, broken invariants, and impossible state immediately
+  (`Result`, typed errors) — do not paper over with defaults.
+- Handle retries only at explicit infra boundaries with policy (documented).
+
+## Avoid without approval
+
+- Broad catch-all that swallows errors or substitutes silent defaults.
+- Defensive branches for types already validated at the boundary.
+
+Document approved exceptions in an ADR (**`rust-device-adr.mdc`**).
+
+## Related rules
+
+- **Typing at edges:** validate config/IPC at boundaries
+- **Logging:** `logging-observability.mdc`

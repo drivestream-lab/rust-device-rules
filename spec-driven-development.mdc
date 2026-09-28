@@ -1,0 +1,22 @@
+---
+description: Spec-driven development — truth hierarchy and same-PR discipline for Rust device daemon repos.
+alwaysApply: true
+---
+
+# Spec-driven development
+
+Truth hierarchy (same spirit as python-services / edge-agent packs):
+
+1. Consumer **`docs/specification/product/`** — what to build
+2. Consumer **`docs/specification/adr/`** — accepted engineering law
+3. Consumer **`docs/specification/as-built/`** — what is live
+4. This constitution — how to code
+5. Code
+
+When behaviour changes, update the matching spec/ADR/as-built in the **same
+PR** as code when the consumer follows SDD delivery.
+
+## Related rules
+
+- **ADR triggers:** `rust-device-adr.mdc`
+- **Testing:** `testing-verify-flows.mdc`

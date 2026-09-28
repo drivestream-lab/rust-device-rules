@@ -1,0 +1,24 @@
+---
+description: Platform backend traits — mac/linux/jetson implement; core stays free of SoC forks.
+alwaysApply: true
+---
+
+# Platform backends
+
+Core depends on **traits** (names illustrative): host metrics, storage
+discovery, process supervision, credential store, optional OS image ops.
+Platform crates implement those traits.
+
+## Hard rules
+
+1. Prefer **one Jetson-family backend** with runtime capability detection over
+   separate Orin vs A-box business trees unless hardware forces a feature flag.
+2. Mac/dev backends may stub metrics/storage — still satisfy trait contracts
+   for day-one tests.
+3. Selecting a backend is build/feature/`--target` concern — not scattered
+   conditionals in reconcile code.
+
+## Related rules
+
+- **Layout:** `architecture.mdc`
+- **ADR:** `rust-device-adr.mdc` when a new backend splits

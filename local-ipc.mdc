@@ -1,0 +1,24 @@
+---
+description: Local IPC transport craft — UDS (or equivalent); bounded queues; no schema catalogs.
+alwaysApply: true
+---
+
+# Local IPC
+
+Daemons in this craft often expose a **local** IPC endpoint (typically Unix
+domain socket) for sibling on-device processes.
+
+## Hard rules
+
+1. **Bounded queues** — no unbounded growth under client flood
+   (**`resource-governance.mdc`**).
+2. **Transport craft only** here — framing/encoding, capability catalogs, and
+   product API names live in consumer ADRs / specs.
+3. Fail closed on protocol violation (**`fail-fast.mdc`**).
+4. Do not log secret material from IPC payloads (**`logging-observability.mdc`**,
+   **`credential-store.mdc`**).
+
+## Related rules
+
+- **Governance:** `resource-governance.mdc`
+- **ADR:** `rust-device-adr.mdc` for encoding choices

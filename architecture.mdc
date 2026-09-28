@@ -1,0 +1,35 @@
+---
+description: Core vs platform backends layout for Rust device daemons — no product #ifdef trees.
+alwaysApply: true
+---
+
+# Architecture & package layout
+
+Prefer a **shared core** plus **thin platform backends**:
+
+```text
+core/                 # 100% shared — traits, state machines, adapters
+platform-mac/         # stub / dev HostBackend
+platform-linux/       # CI / lab HostBackend
+platform-jetson/      # Orin / A-box family (capability detect at runtime)
+```
+
+Exact crate names are consumer foundation + ADR. Constitution rule: **business
+and reconcile logic live in core**; SoC specifics implement traits only.
+
+## Hard rules
+
+1. **No `#ifdef Orin`** (or equivalent) in core business paths — use traits /
+   features selected at build or capability detection after install.
+2. **Config absorbs path differences** (e.g. storage layout) — prefer
+   profile/config over forked logic trees.
+3. Entrypoint stays thin: load config, wire DI, run supervisor loop.
+4. Product module maps and cloud schema catalogs are **not** constitution —
+   consumer `docs/specification/`.
+
+## Related rules
+
+- **Platforms:** `platform-backends.mdc`
+- **Lifecycle:** `process-lifecycle.mdc`
+- **DI:** `dependency-injection.mdc`
+- **ADR:** `rust-device-adr.mdc`

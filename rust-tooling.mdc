@@ -1,0 +1,23 @@
+---
+description: Rust toolchain hygiene — fmt, clippy, test; edition policy; day-one-green.
+alwaysApply: true
+---
+
+# Rust tooling
+
+Analogue of `python-tooling.mdc` for this craft.
+
+## Defaults
+
+- **`cargo fmt`** and **`cargo clippy`** clean on CI for all workspace crates
+- **`cargo test`** green on at least linux (and mac for stub backends)
+- Pin edition in workspace; do not mix editions without ADR
+- Prefer workspace `Cargo.toml` for shared deps; deny unused public API drift
+  via clippy/lints as foundation encodes
+
+Exact Makefile/CI YAML lives in the foundation — constitution requires the
+hygiene bar.
+
+## Related rules
+
+- **Testing:** `testing-verify-flows.mdc`

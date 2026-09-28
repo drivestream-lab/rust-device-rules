@@ -1,0 +1,24 @@
+---
+description: Structured logging — queryable fields; never log secrets; correlation IDs.
+alwaysApply: true
+---
+
+# Logging & observability
+
+Practice aligns with python-services `logging-loguru.mdc` and ios
+`logging-observability.mdc`: structured fields, not string soup.
+
+## Hard rules
+
+1. Prefer discrete fields (device_id, correlation_id, error_kind) over
+   interpolating identifiers only into free text.
+2. **Never** log secrets (keys, PEMs, tokens, join material).
+3. Choose a single logging facade for the daemon; do not mix ad-hoc `println!`
+   for production paths.
+
+Sink/backend (journald, file, OTel) is consumer ADR / foundation default.
+
+## Related rules
+
+- **Credentials:** `credential-store.mdc`
+- **Fail fast:** `fail-fast.mdc`
